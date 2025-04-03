@@ -1,4 +1,3 @@
-
 name: Deploy SQL project
 
 on:
@@ -18,7 +17,7 @@ jobs:
       run: dotnet restore Wingtips/Wingtips.sqlproj
     - name: Build
       run: dotnet build Wingtips/Wingtips.sqlproj --no-restore
-    - name: Get deploy script
+    - name: Get deployment script
       run: |
         sqlpackage /Action:Script /SourceFile:Wingtips/bin/Debug/Wingtips.dacpac /TargetConnectionString:"${{ secrets.SQL_CONNECTION_STRING }}" /OutputPath:WingtipsDeploy.sql
     - name: Upload SQL script
@@ -26,7 +25,15 @@ jobs:
       with:
         name: ReviewDeploymentScript
         path: WingtipsDeploy.sql
-
+    - name: Generate deploy report
+      run: |
+        sqlpackage /Action:DeployReport /SourceFile:Wingtips/bin/Debug/Wingtips.dacpac /TargetConnectionString:"${{ secrets.SQL_CONNECTION_STRING }}" /OutputPath:WingtipsDeployReport.xml
+    - name: Prettify deploy report
+      shell: pwsh
+      run: .github/workflows/deployReportOutput.ps1 -deployReportFile WingtipsDeployReport.xml
+    - name: output step summary
+      run: |
+        cat deployreport.md >> $GITHUB_STEP_SUMMARY
 
   deploy:
     runs-on: ubuntu-22.04
