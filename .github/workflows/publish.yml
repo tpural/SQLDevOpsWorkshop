@@ -1,0 +1,23 @@
+name: Deploy SQL Project
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore Wingtips/Wingtips.sqlproj
+    - name: Build
+      run: dotnet build Wingtips/Wingtips.sqlproj --no-restore
+    - name: Publish SQL project
+      run:  |
+        SqlPackage /Action:Publish /SourceFile:Wingtips/bin/Debug/Wingtips.dacpac /TargetConnectionTring:{{secrets.SQL_CONNECTION_STRING}}
