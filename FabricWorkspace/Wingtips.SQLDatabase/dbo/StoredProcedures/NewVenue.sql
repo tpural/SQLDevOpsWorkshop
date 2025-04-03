@@ -26,3 +26,6 @@ AS
         (@VenueId, @VenueName,@VenueType,'admin@email.com',@CountryCode, @PostalCode)
 
 RETURN 0
+
+GO
+

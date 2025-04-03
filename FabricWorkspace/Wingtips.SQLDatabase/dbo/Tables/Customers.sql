@@ -17,3 +17,9 @@ CREATE TABLE [dbo].[Customers] (
 
 GO
 
+CREATE NONCLUSTERED INDEX [IX_Customers_PostalCode]
+    ON [dbo].[Customers]([PostalCode] ASC);
+
+
+GO
+
