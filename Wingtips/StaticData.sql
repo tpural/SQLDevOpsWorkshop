@@ -25,7 +25,9 @@
       ('dance', 'Dance Venue', 'Dance Performance', 'Performance', 'Performances','en-us'),
       ('blues', 'Blues Venue', 'Blues Session', 'Session','Sessions','en-us' ),
       ('rockmusic','Rock Music Venue','Rock Concert','Concert', 'Concerts','en-us'),
-      ('opera','Opera Venue','Opera','Opera','Operas','en-us')
+      ('opera','Opera Venue','Opera','Opera','Operas','en-us'),
+      ('motorcycleracing','Motorcycle Racing Venue','Motorcycle Race', 'Race', 'Races', 'en-us'),
+      ('swimming','Swimming Venue','Swimming Meet','Meet','Meets','en-us')
   ) AS source(
       VenueType,VenueTypeName,EventTypeName,EventTypeShortName,EventTypeShortNamePlural,[Language]
   )              
